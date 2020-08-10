@@ -13,6 +13,8 @@ curl -sL https://raw.githubusercontent.com/mklement0/n-install/stable/bin/n-inst
 npm install -g grunt gulp n parcel-bundler typescript newman
 npm install -g --save-dev webpack webpack-cli
 npm install -g npm
+# Install Bower
+npm install -g bower
 rm -rf ~/n
 
 # Install Yarn repository and key
@@ -44,3 +46,4 @@ DocumentInstalledItem "Webpack ($(webpack --version))"
 DocumentInstalledItem "Webpack CLI ($(webpack-cli --version))"
 DocumentInstalledItem "Yarn ($(yarn --version))"
 DocumentInstalledItem "Newman ($(newman --version))"
+DocumentInstalledItem "Bower ($(bower --version))"

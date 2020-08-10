@@ -14,6 +14,10 @@ set -e
 wget -qO - "https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public" | apt-key add -
 add-apt-repository --yes https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/
 
+# Install GPG Key for AWS Corretto Open JDK. See https://docs.aws.amazon.com/corretto/latest/corretto-8-ug/generic-linux-install.html
+wget -O- https://apt.corretto.aws/corretto.key | apt-key add -
+add-apt-repository --yes 'deb https://apt.corretto.aws stable main'
+
 if isUbuntu16 || isUbuntu18 ; then
     # Install GPG Key for Azul Open JDK. See https://www.azul.com/downloads/azure-only/zulu/
     apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0xB1998361219BD9C9
@@ -46,6 +50,9 @@ if isUbuntu16 || isUbuntu18 ; then
 echo "JAVA_HOME_12_X64=/usr/lib/jvm/adoptopenjdk-12-hotspot-amd64" | tee -a /etc/environment
 fi
 echo "JAVA_HOME=/usr/lib/jvm/adoptopenjdk-${DEFAULT_JDK_VERSION}-hotspot-amd64" | tee -a /etc/environment
+
+#Install AWS Corretto
+apt-get install -y java-1.8.0-amazon-corretto-jdk
 
 # Install Ant
 apt-fast install -y --no-install-recommends ant ant-optional
@@ -97,6 +104,9 @@ DocumentInstalledItemIndent "11 ($(/usr/lib/jvm/adoptopenjdk-11-hotspot-amd64/bi
 if isUbuntu16 || isUbuntu18 ; then
 DocumentInstalledItemIndent "12 ($(/usr/lib/jvm/adoptopenjdk-12-hotspot-amd64/bin/java -showversion |& head -n 1))"
 fi
+
+DocumentInstalledItem "Amazon Corretto OpenJDK:"
+DocumentInstalledItemIndent "8 ($(/usr/lib/jvm/java-1.8.0-amazon-corretto/bin/java -showversion |& head -n 1))"
 DocumentInstalledItem "Ant ($(ant -version))"
 DocumentInstalledItem "Gradle ${gradleVersion}"
 DocumentInstalledItem "Maven ($(mvn -version | head -n 1))"
